@@ -1,0 +1,42 @@
+{
+  "name": "mongoose-wayback",
+  "version": "1.0.0",
+  "description": "Wayback plugin for mongoose models.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint -f unix \"src/**/*.{ts,tsx}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mountyco/mongoose-wayback.git"
+  },
+  "keywords": [
+    "mongooose",
+    "wayback",
+    "mongoose",
+    "audit",
+    "logs",
+    "mongoose",
+    "model",
+    "update",
+    "logger"
+  ],
+  "author": "Anand Siddharth <anand.siddharth@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mountyco/mongoose-wayback/issues"
+  },
+  "homepage": "https://github.com/mountyco/mongoose-wayback#readme",
+  "dependencies": {
+    "@types/mongoose": "^5.10.3",
+    "mongoose": "^5.11.12"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "~2.6.1",
+    "@typescript-eslint/parser": "~2.6.1",
+    "eslint": "~6.6.0",
+    "eslint-plugin-tsdoc": "^0.2.10",
+    "typescript": "~3.7.2"
+  }
+}
