@@ -1,5 +1,5 @@
 import { Schema, model, Document, Model } from "mongoose";
-
+import { Diff } from "../interfaces/diff";
 
 const WaybackSchema: Schema = new Schema({
     entityName: { type: String, required: true },
@@ -13,7 +13,7 @@ const WaybackSchema: Schema = new Schema({
 interface InterfaceWayback extends Document {
     entityName: string;
     entityId: string;
-    changes: unknown;
+    changes: Diff;
     old: unknown;
     new: unknown;
     user: unknown;
