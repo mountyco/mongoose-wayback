@@ -1,14 +1,15 @@
-import { Schema, model, Document, Model, connect, createConnection } from "mongoose";
+process.env.MONGOOSE_WAYBACK_CONNECTION_URL = "mongodb://localhost:27017/wayback-test-audits";
+import { Schema, model, Document, Model, connect } from "mongoose";
 import { HasWayback } from "./interfaces/hasWayback";
-import { changeConnection } from "./model/wayback";
+
 
 import WaybackPlugin from "./plugin";
 
 connect("mongodb://localhost:27017/wayback-test");
 
-const newConnection = createConnection("mongodb://localhost:27017/wayback-audits");
 
-changeConnection(newConnection);
+
+
 
 
 
