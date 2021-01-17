@@ -1,24 +1,29 @@
-import { Schema, model, Document, Model } from "mongoose";
-import { Diff } from "../interfaces/diff";
-
-const WaybackSchema: Schema = new Schema({
+import { Schema, Document, Model, model, createConnection } from "mongoose";
+export type Action = "update";
+export const WaybackSchema: Schema = new Schema({
     entityName: { type: String, required: true },
     entityId: { type: String, required: true },
-    changes: { type: {}, required: true },
+    action: { type: String, required: true },
     old: { type: {}, required: true },
     new: { type: {}, required: true },
     user: { type: {}, required: true }
 }, { timestamps: true });
 
-interface InterfaceWayback extends Document {
+export interface InterfaceWayback extends Document {
     entityName: string;
+    action: Action;
     entityId: string;
-    changes: Diff;
     old: unknown;
     new: unknown;
     user: unknown;
 }
 
-const Wayback: Model<InterfaceWayback> = model("Wayback", WaybackSchema);
+let Wayback: Model<InterfaceWayback>;
+if (!process.env.MONGOOSE_WAYBACK_CONNECTION_URL) {
+    Wayback = model("Wayback", WaybackSchema);
+} else {
+    Wayback = createConnection(process.env.MONGOOSE_WAYBACK_CONNECTION_URL).
+        model<InterfaceWayback>("Wayback", WaybackSchema as unknown as Schema<InterfaceWayback>);
+}
 
-export default Wayback;
+export { Wayback };
