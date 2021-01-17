@@ -37,7 +37,7 @@ const Test: Model<InterfaceTeamSchema> = model("UserTest", TestSchema);
 
 Test.findOne({ email: "anand@mounty.co" }, (e, data: InterfaceTeamSchema) => {
     data.__user = { name: "Hello World", _id: "Hello" };
-    data.name = "Aand Sisd";
+    data.name = "Aand Sissd";
     data.save().then(console.log).catch(console.error);
 });
 
