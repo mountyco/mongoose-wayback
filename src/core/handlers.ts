@@ -14,7 +14,7 @@ const resolveUser = (newObject: HasWayback): User => {
     return user;
 };
 
-const hasChanges = (newObject: HasWayback, oldObject: HasWayback): boolean => {
+const hasChanges = (newObject: Document, oldObject: Document): boolean => {
 
     const _a = newObject.toJSON();
     const _b = oldObject.toJSON();
@@ -27,25 +27,21 @@ const hasChanges = (newObject: HasWayback, oldObject: HasWayback): boolean => {
 };
 
 export const handleSave = (newObject: Document, next: (err?: NativeError) => void): void => {
-
-
-
-
     const user: User = resolveUser(newObject as HasWayback);
-
     (newObject.constructor as Model<Document>).findOne({
         _id: newObject._id
     }).then((oldObject: Document, err) => {
         if (!err) {
-            if (hasChanges(newObject as HasWayback, oldObject as HasWayback)) {
+            if (hasChanges(newObject, oldObject)) {
                 logit((newObject.constructor as Model<Document>).collection.name, "update", oldObject, newObject, user)
                     .then(() => next())
                     .catch((err) => next(err));
+            } else {
+                next();
             }
         } else {
             next(err);
         }
     });
-
 };
 
