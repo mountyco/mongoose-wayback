@@ -30,8 +30,8 @@ export const handleSave = (newObject: Document, next: (err?: NativeError) => voi
     const user: User = resolveUser(newObject as HasWayback);
     (newObject.constructor as Model<Document>).findOne({
         _id: newObject._id
-    }).then((oldObject: Document, err) => {
-        if (!err) {
+    }).then((oldObject: Document<unknown> | null) => {
+        if (oldObject) {
             if (hasChanges(newObject, oldObject)) {
                 logit((newObject.constructor as Model<Document>).collection.name, "update", oldObject, newObject, user)
                     .then(() => next())
@@ -40,7 +40,7 @@ export const handleSave = (newObject: Document, next: (err?: NativeError) => voi
                 next();
             }
         } else {
-            next(err);
+            next(new Error("can't find old object") as NativeError);
         }
     });
 };

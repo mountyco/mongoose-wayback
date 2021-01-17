@@ -2,10 +2,13 @@
   "name": "mongoose-wayback",
   "version": "1.0.0",
   "description": "Wayback plugin for mongoose models.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint -f unix \"src/**/*.{ts,tsx}\""
+    "lint": "eslint -f unix \"src/**/*.{ts,tsx}\"",
+    "build": "tsc",
+    "prepublish": "tsc"
   },
   "repository": {
     "type": "git",
@@ -34,6 +37,7 @@
     "mongoose": "^5.11.12"
   },
   "devDependencies": {
+    "@types/deep-diff": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "~2.6.1",
     "@typescript-eslint/parser": "~2.6.1",
     "eslint": "~6.6.0",

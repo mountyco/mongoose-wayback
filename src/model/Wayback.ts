@@ -20,7 +20,7 @@ export interface InterfaceWayback extends Document {
 
 let Wayback: Model<InterfaceWayback>;
 if (!process.env.MONGOOSE_WAYBACK_CONNECTION_URL) {
-    Wayback = model("Wayback", WaybackSchema);
+    Wayback = model("Wayback", WaybackSchema as unknown as Schema<InterfaceWayback>);
 } else {
     Wayback = createConnection(process.env.MONGOOSE_WAYBACK_CONNECTION_URL).
         model<InterfaceWayback>("Wayback", WaybackSchema as unknown as Schema<InterfaceWayback>);
