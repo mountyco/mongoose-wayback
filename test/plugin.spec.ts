@@ -1,9 +1,9 @@
 process.env.MONGOOSE_WAYBACK_CONNECTION_URL = "mongodb://localhost:27017/wayback-test-audits";
 import { Schema, model, Document, Model, connect } from "mongoose";
-import { HasWayback } from "./interfaces/hasWayback";
+import { HasWayback } from "../src/interfaces/hasWayback";
 
 
-import WaybackPlugin from "./plugin";
+import { WaybackPlugin } from "../src/";
 
 connect("mongodb://localhost:27017/wayback-test");
 
