@@ -2,18 +2,34 @@ import { Document, Model, NativeError } from "mongoose";
 import { HasWayback } from "../interfaces/hasWayback";
 import { User } from "../interfaces/user";
 import { logit } from "./loggit";
+import { diff } from "deep-diff";
 
 
-function resolveUser(newObject: HasWayback): User {
+const resolveUser = (newObject: HasWayback): User => {
     const user = (newObject).__user;
     if (!user) {
         throw new Error("unable to get user information");
     }
     delete newObject.__user;
     return user;
-}
+};
+
+const hasChanges = (newObject: HasWayback, oldObject: HasWayback): boolean => {
+
+    const _a = newObject.toJSON();
+    const _b = oldObject.toJSON();
+
+    const changes = (diff(_a, _b));
+    if (changes && changes.length) {
+        return true;
+    }
+    return false;
+};
 
 export const handleSave = (newObject: Document, next: (err?: NativeError) => void): void => {
+
+
+
 
     const user: User = resolveUser(newObject as HasWayback);
 
@@ -21,12 +37,15 @@ export const handleSave = (newObject: Document, next: (err?: NativeError) => voi
         _id: newObject._id
     }).then((oldObject: Document, err) => {
         if (!err) {
-            logit((newObject.constructor as Model<Document>).collection.name, "update", oldObject, newObject, user)
-                .then(() => next())
-                .catch((err) => next(err));
+            if (hasChanges(newObject as HasWayback, oldObject as HasWayback)) {
+                logit((newObject.constructor as Model<Document>).collection.name, "update", oldObject, newObject, user)
+                    .then(() => next())
+                    .catch((err) => next(err));
+            }
         } else {
-            next();
+            next(err);
         }
     });
 
 };
+
