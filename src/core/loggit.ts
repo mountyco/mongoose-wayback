@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import Wayback from "../model/wayback";
+import { Wayback } from "../model/wayback";
 import { Action } from "../model/wayback";
 
 
