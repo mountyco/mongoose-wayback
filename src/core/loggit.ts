@@ -1,8 +1,26 @@
 import { Document } from "mongoose";
-export type Action = "update";
+import Wayback from "../model/wayback";
+import { Action } from "../model/wayback";
 
-export const logit = function (modelName: string, action: Action, oldModel: Document, newModel: Document): Promise<boolean> {
-    return new Promise((resolve) => {
+
+export const logit = function (modelName: string, action: Action, oldModel: Document, newModel: Document, user: unknown): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+        if (!user) {
+            reject(
+                new Error("User not specified")
+            );
+            return;
+        }
+
+        Wayback.create({
+            entityId: oldModel.id,
+            entityName: modelName,
+            action: action,
+            old: oldModel.toJSON(),
+            new: newModel.toJSON(),
+            user: user,
+        });
 
         resolve(true);
     });
