@@ -1,5 +1,5 @@
 import { Schema, Document, Model, model, createConnection } from "mongoose";
-export type Action = "update";
+export type Action = "update" | "create";
 export const WaybackSchema: Schema = new Schema({
     entityName: { type: String, required: true },
     entityId: { type: String, required: true },
