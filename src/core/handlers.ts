@@ -2,7 +2,7 @@
 import { Document, Model, NativeError, Query } from "mongoose";
 import { HasWayback } from "../interfaces/hasWayback";
 import { User } from "../interfaces/user";
-import { logit } from "./loggit";
+import { logit } from "./logit";
 import { resolveUser, hasChanges } from "./utils";
 
 
