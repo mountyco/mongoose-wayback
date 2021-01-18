@@ -1,5 +1,5 @@
 {
-  "name": "mongoose-wayback",
+  "name": "@mountyco/mongoose-wayback",
   "version": "1.0.0",
   "description": "Wayback plugin for mongoose models.",
   "main": "dist/index.js",
@@ -10,6 +10,9 @@
     "build": "tsc",
     "prepublish": "tsc"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mountyco/mongoose-wayback.git"
@@ -43,5 +46,8 @@
     "eslint": "~6.6.0",
     "eslint-plugin-tsdoc": "^0.2.10",
     "typescript": "~3.7.2"
+  },
+  "directories": {
+    "test": "test"
   }
 }
