@@ -35,9 +35,11 @@ const Test: Model<InterfaceTeamSchema> = model("UserTest", TestSchema as unknown
 //     console.log(err);
 // });
 
-Test.findOne({ email: "anand@mounty.co" }, (e: unknown, data: InterfaceTeamSchema) => {
-    data.__user = { name: "Hello World", _id: "Hello" };
-    data.name = "Aand Sissd";
-    data.save().then(console.log).catch(console.error);
-});
-
+// Test.findOne({ email: "anand@mounty.co" }, (e: unknown, data: InterfaceTeamSchema) => {
+//     data.__user = { name: "Hello World", _id: "Hello" };
+//     data.name = "Aand Sissd";
+//     data.save().then(console.log).catch(console.error);
+// });
+Test.updateMany({
+    email: "anand@mounty.co"
+}, { name: "Undertaker", __user: { name: "anand siddharth" } }).then(() => console.log("sd"));
