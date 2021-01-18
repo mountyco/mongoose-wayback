@@ -40,6 +40,12 @@ const Test: Model<InterfaceTeamSchema> = model("UserTest", TestSchema as unknown
 //     data.name = "Aand Sissd";
 //     data.save().then(console.log).catch(console.error);
 // });
-Test.updateMany({
-    email: "anand@mounty.co"
-}, { name: "Undertaker", __user: { name: "anand siddharth" } }).then(() => console.log("sd"));
+// Test.updateMany({
+//     email: "anand@mounty.co"
+// }, { name: "Kane", __user: { name: "anand siddharth" } }).then(() => console.log("sd"));
+
+var t = new Test();
+t.email = "Akhil Marsonya";
+t.name = "akhil@mounty.co";
+t.__user = { name: "anand siddharth" };
+t.save();

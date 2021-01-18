@@ -8,7 +8,6 @@ import { resolveUser, hasChanges } from "./utils";
 
 export const handleSave = async (newObject: Document): Promise<void> => {
     const user: User = resolveUser(newObject as HasWayback);
-
     if (newObject.isNew) {
         await logit(newObject._id, (newObject.constructor as Model<Document>).collection.name, "create", {}, newObject.toJSON(), user)
         return;
