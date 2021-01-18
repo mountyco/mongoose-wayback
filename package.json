@@ -28,7 +28,7 @@
     "update",
     "logger"
   ],
-  "author": "Anand Siddharth <anand.siddharth@hotmail.com>",
+  "author": "Anand Siddharth <anand.siddharth@hotmail.com> (https://twitter.com/anand_sid)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mountyco/mongoose-wayback/issues"
