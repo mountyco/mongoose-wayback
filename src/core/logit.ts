@@ -1,9 +1,10 @@
 import { Document } from "mongoose";
+import { User } from "../interfaces/user";
 import { Wayback } from "../model/wayback";
 import { Action } from "../model/wayback";
 
 
-export const logit = function (modelName: string, action: Action, oldModel: Document, newModel: Document, user: unknown): Promise<boolean> {
+export const logit = function (entityId: string, entityName: string, action: Action, oldModel: Object, newModel: Object, user: User): Promise<boolean> {
     return new Promise((resolve, reject) => {
 
         if (!user) {
@@ -14,11 +15,11 @@ export const logit = function (modelName: string, action: Action, oldModel: Docu
         }
 
         Wayback.create({
-            entityId: oldModel.id,
-            entityName: modelName,
+            entityId: entityId,
+            entityName: entityName,
             action: action,
-            old: oldModel?.toJSON() || oldModel,
-            new: newModel?.toJSON() || newModel,
+            old: oldModel,
+            new: newModel,
             user: user,
         });
 
