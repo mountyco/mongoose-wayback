@@ -1,47 +1,32 @@
-import { Document, Model, NativeError } from "mongoose";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Document, Model, NativeError, Query } from "mongoose";
 import { HasWayback } from "../interfaces/hasWayback";
 import { User } from "../interfaces/user";
 import { logit } from "./loggit";
-import { diff } from "deep-diff";
+import { resolveUser, hasChanges } from "./utils";
 
 
-const resolveUser = (newObject: HasWayback): User => {
-    const user = (newObject).__user;
-    if (!user) {
-        throw new Error("unable to get user information");
-    }
-    delete newObject.__user;
-    return user;
-};
-
-const hasChanges = (newObject: Document, oldObject: Document): boolean => {
-
-    const _a = newObject.toJSON();
-    const _b = oldObject.toJSON();
-
-    const changes = (diff(_a, _b));
-    if (changes && changes.length) {
-        return true;
-    }
-    return false;
-};
-
-export const handleSave = (newObject: Document, next: (err?: NativeError) => void): void => {
+export const handleSave = async (newObject: Document): Promise<void> => {
     const user: User = resolveUser(newObject as HasWayback);
-    (newObject.constructor as Model<Document>).findOne({
+    const oldObject = await (newObject.constructor as Model<Document>).findOne({
         _id: newObject._id
-    }).then((oldObject: Document<unknown> | null) => {
-        if (oldObject) {
-            if (hasChanges(newObject, oldObject)) {
-                logit((newObject.constructor as Model<Document>).collection.name, "update", oldObject, newObject, user)
-                    .then(() => next())
-                    .catch((err) => next(err));
-            } else {
-                next();
-            }
-        } else {
-            next(new Error("can't find old object") as NativeError);
-        }
     });
+    if (oldObject) {
+        if (hasChanges(newObject, oldObject)) {
+            await logit((newObject.constructor as Model<Document>).collection.name, "update", oldObject, newObject, user);
+        }
+    } else {
+        new Error("can't find old object") as NativeError;
+    }
 };
 
+export const handleUpdate = async (query: Query<any, any>): Promise<void> => {
+    const updated = query.getUpdate();
+    await query.find(query.getQuery())
+        .cursor()
+        .eachAsync((async (doc: Document) => {
+            const newObject: HasWayback = doc.set(updated) as HasWayback;
+            newObject.__user = (updated as HasWayback).__user;
+            await handleSave(newObject);
+        }));
+};
