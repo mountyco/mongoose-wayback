@@ -6,9 +6,6 @@ import { handleSave, handleUpdate } from "./core/handlers";
 const WaybackPlugin = (schema: Schema): void => {
 
     schema.pre<Document>("save", async function () {
-        if (this.isNew) {
-            return true;
-        }
         await handleSave(this);
     });
 
