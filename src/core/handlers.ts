@@ -8,12 +8,18 @@ import { resolveUser, hasChanges } from "./utils";
 
 export const handleSave = async (newObject: Document): Promise<void> => {
     const user: User = resolveUser(newObject as HasWayback);
+
+    if (newObject.isNew) {
+        await logit(newObject._id, (newObject.constructor as Model<Document>).collection.name, "create", {}, newObject.toJSON(), user)
+        return;
+    }
+
     const oldObject = await (newObject.constructor as Model<Document>).findOne({
         _id: newObject._id
     });
     if (oldObject) {
         if (hasChanges(newObject, oldObject)) {
-            await logit((newObject.constructor as Model<Document>).collection.name, "update", oldObject, newObject, user);
+            await logit(newObject._id, (newObject.constructor as Model<Document>).collection.name, "update", oldObject.toJSON(), newObject.toJSON(), user);
         }
     } else {
         new Error("can't find old object") as NativeError;
