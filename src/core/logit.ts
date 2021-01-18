@@ -17,8 +17,8 @@ export const logit = function (modelName: string, action: Action, oldModel: Docu
             entityId: oldModel.id,
             entityName: modelName,
             action: action,
-            old: oldModel.toJSON(),
-            new: newModel.toJSON(),
+            old: oldModel?.toJSON() || oldModel,
+            new: newModel?.toJSON() || newModel,
             user: user,
         });
 
