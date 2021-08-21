@@ -18,7 +18,8 @@ const hasChanges = (newObject: Document, oldObject: Document): boolean => {
     const _a = newObject.toJSON();
     const _b = oldObject.toJSON();
 
-    const changes = (diff(_a, _b));
+    let changes = (diff(_a, _b));
+    changes = changes?.filter(x => typeof x.path == 'string' && x.path !== 'updatedAt')
     if (changes && changes.length) {
         return true;
     }

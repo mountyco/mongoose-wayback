@@ -26,7 +26,8 @@ export const handleSave = async (newObject: Document): Promise<void> => {
 };
 
 export const handleUpdate = async (query: Query<any, any>): Promise<void> => {
-    const updated = query.getUpdate();
+    let updated = query.getUpdate();
+    if (updated?.$set) updated = updated.$set;
     await query.find(query.getQuery())
         .cursor()
         .eachAsync((async (doc: Document) => {
