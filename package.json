@@ -1,6 +1,6 @@
 {
   "name": "@mountyco/mongoose-wayback",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Wayback plugin for mongoose models.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

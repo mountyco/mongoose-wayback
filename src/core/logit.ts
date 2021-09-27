@@ -14,6 +14,11 @@ export const logit = function (entityId: string, entityName: string, action: Act
             return;
         }
 
+        if (user && typeof user == 'object' && (<any>user).skip) {
+            resolve(true);
+            return true;
+        }
+
         Wayback.create({
             entityId: entityId,
             entityName: entityName,
